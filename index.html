@@ -2,7 +2,7 @@
 <html lang="ne">
 <head>
 <meta charset="UTF-8">
-<title>Nepali Typing Tools – Downloads</title>
+<title>File Downloader</title>
 
 <style>
 :root{
@@ -23,6 +23,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
+  user-select:none;
 }
 
 header,footer{
@@ -32,10 +33,7 @@ header,footer{
   padding:15px;
 }
 
-header h1{
-  margin:0;
-  font-size:24px;
-}
+header h1{margin:0;font-size:24px;}
 
 .container{
   display:flex;
@@ -52,12 +50,8 @@ header h1{
   padding:30px;
 }
 
-h2{
-  text-align:center;
-  margin-bottom:20px;
-}
+h2{text-align:center;margin-bottom:20px;}
 
-/* TABLE */
 .download-table{
   width:100%;
   border-collapse:collapse;
@@ -68,12 +62,12 @@ h2{
 .download-table td{
   padding:12px 14px;
   border-bottom:1px solid #ccc;
-  text-align:left;
 }
 
 .download-table th{
   background:var(--primary);
   color:white;
+  text-align:left;
 }
 
 .download-table tr:hover{
@@ -86,13 +80,12 @@ h2{
   border:none;
   padding:6px 14px;
   border-radius:6px;
-  font-size:14px;
   cursor:pointer;
+  font-size:14px;
 }
 
 .dl-btn:hover{opacity:.9}
 
-/* DARK MODE */
 .toggle{
   margin-top:25px;
   background:#333;
@@ -103,18 +96,14 @@ h2{
   cursor:pointer;
 }
 
-.toggle:hover{opacity:.9}
-
-footer{
-  font-size:14px;
-}
+footer{font-size:14px;}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Nepali Typing Tools – Downloads</h1>
+  <h1>Download Center</h1>
 </header>
 
 <div class="container">
@@ -138,35 +127,21 @@ footer{
           <td>TypeShala</td>
           <td>HTML App</td>
           <td>Nepali Typing Practice Tool</td>
-          <td>
-            <button class="dl-btn" onclick="secureDownload('typeshala.zip')">
-              ⬇ Download
-            </button>
-          </td>
+          <td><button class="dl-btn" onclick="secureDownload('typeshala.zip')">⬇ Download</button></td>
         </tr>
-
         <tr>
           <td>2</td>
           <td>Unicode → Preeti</td>
           <td>HTML Tool</td>
           <td>Unicode to Preeti Converter</td>
-          <td>
-            <button class="dl-btn" onclick="secureDownload('unicode-to-preeti.zip')">
-              ⬇ Download
-            </button>
-          </td>
+          <td><button class="dl-btn" onclick="secureDownload('unicode-to-preeti.zip')">⬇ Download</button></td>
         </tr>
-
         <tr>
           <td>3</td>
           <td>Preeti → Unicode</td>
           <td>HTML Tool</td>
           <td>Preeti to Unicode Converter</td>
-          <td>
-            <button class="dl-btn" onclick="secureDownload('preeti-to-unicode.zip')">
-              ⬇ Download
-            </button>
-          </td>
+          <td><button class="dl-btn" onclick="secureDownload('preeti-to-unicode.zip')">⬇ Download</button></td>
         </tr>
       </tbody>
     </table>
@@ -183,11 +158,11 @@ footer{
 </footer>
 
 <script>
+/* PASSWORD */
 const DOWNLOAD_PASSWORD = "12345678";
 
 function secureDownload(file){
   const pwd = prompt("Enter download password:");
-
   if(pwd === DOWNLOAD_PASSWORD){
     const a = document.createElement("a");
     a.href = file;
@@ -196,13 +171,44 @@ function secureDownload(file){
     a.click();
     document.body.removeChild(a);
   }else if(pwd !== null){
-    alert("❌ Incorrect password!");
+    alert("❌ Incorrect password");
   }
 }
 
+/* DARK MODE */
 function toggleDark(){
   document.body.classList.toggle("dark");
 }
+
+/* MAX CLIENT-SIDE PROTECTION */
+
+// Disable right click
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// Disable text selection
+document.addEventListener("selectstart", e => e.preventDefault());
+
+// Disable keys
+document.addEventListener("keydown", e => {
+  if(
+    e.keyCode === 123 || // F12
+    (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key.toUpperCase())) ||
+    (e.ctrlKey && ["U","S","P"].includes(e.key.toUpperCase()))
+  ){
+    e.preventDefault();
+  }
+});
+
+// DevTools detection (basic)
+setInterval(() => {
+  if(
+    window.outerWidth - window.innerWidth > 160 ||
+    window.outerHeight - window.innerHeight > 160
+  ){
+    document.body.innerHTML =
+      "<h2 style='text-align:center;margin-top:20%;color:red;'>⚠️ Access Restricted</h2>";
+  }
+}, 1000);
 </script>
 
 </body>
